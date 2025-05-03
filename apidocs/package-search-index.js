@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"org.microbean.proxy","l":"org.microbean.proxy"}];updateSearchResults();
