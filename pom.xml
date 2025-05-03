@@ -141,7 +141,7 @@
       <dependency>
         <groupId>org.microbean</groupId>
         <artifactId>microbean-bean</artifactId>
-        <version>0.0.18-SNAPSHOT</version>
+        <version>0.0.18</version>
       </dependency>
 
       <dependency>
@@ -308,7 +308,7 @@
             <dependency>
               <groupId>com.puppycrawl.tools</groupId>
               <artifactId>checkstyle</artifactId>
-              <version>10.12.6</version>
+              <version>10.23.1</version>
             </dependency>
           </dependencies>
         </plugin>
