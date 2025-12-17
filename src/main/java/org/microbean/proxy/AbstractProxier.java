@@ -13,11 +13,11 @@
  */
 package org.microbean.proxy;
 
-import java.util.Objects;
-
 import java.util.function.Supplier;
 
 import org.microbean.construct.Domain;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * An abstract base class for subclassses that create {@linkplain Proxy proxies}.
@@ -29,7 +29,19 @@ import org.microbean.construct.Domain;
 public abstract sealed class AbstractProxier<PS extends ProxySpecification>
   permits AbstractReflectiveProxier, AbstractToolkitProxier {
 
+
+  /*
+   * Instance fields.
+   */
+
+
   private final Domain domain;
+
+
+  /*
+   * Constructors.
+   */
+
 
   /**
    * Creates a new {@link AbstractProxier} implementation.
@@ -39,8 +51,14 @@ public abstract sealed class AbstractProxier<PS extends ProxySpecification>
    * @exception NullPointerException if {@code domain} is {@code null}
    */
   protected AbstractProxier(final Domain domain) {
-    this.domain = Objects.requireNonNull(domain, "domain");
+    this.domain = requireNonNull(domain, "domain");
   }
+
+
+  /*
+   * Instance methods.
+   */
+
 
   /**
    * Returns the {@link ClassLoader} for loading classes.
@@ -55,7 +73,7 @@ public abstract sealed class AbstractProxier<PS extends ProxySpecification>
   protected ClassLoader classLoader() {
     return Thread.currentThread().getContextClassLoader();
   }
-  
+
   /**
    * Returns the {@link Domain} supplied at construction time.
    *

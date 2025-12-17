@@ -13,20 +13,17 @@
  */
 package org.microbean.proxy;
 
-import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
 
 import java.lang.System.Logger;
-
-import java.util.Objects;
-
-import java.util.function.Supplier;
 
 import org.microbean.construct.Domain;
 
 import static java.lang.System.getLogger;
 
 import static java.lang.System.Logger.Level.DEBUG;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * An {@link AbstractProxier} built using some kind of <dfn>toolkit</dfn>, such as <a
@@ -40,9 +37,27 @@ import static java.lang.System.Logger.Level.DEBUG;
  */
 public abstract non-sealed class AbstractToolkitProxier<PS extends ProxySpecification, T> extends AbstractProxier<PS> {
 
+
+  /*
+   * Static fields.
+   */
+
+
   private static final Logger LOGGER = getLogger(AbstractToolkitProxier.class.getName());
 
+
+  /*
+   * Instance fields.
+   */
+
+
   private final Lookup lookup;
+
+
+  /*
+   * Constructors.
+   */
+
 
   /**
    * Creates a new {@link AbstractToolkitProxier}.
@@ -58,8 +73,14 @@ public abstract non-sealed class AbstractToolkitProxier<PS extends ProxySpecific
   protected AbstractToolkitProxier(final Domain domain, final Lookup lookup) {
     super(domain);
     // see #lookup(Class) below
-    this.lookup = Objects.requireNonNull(lookup, "lookup");
+    this.lookup = requireNonNull(lookup, "lookup");
   }
+
+
+  /*
+   * Instance methods.
+   */
+
 
   /**
    * Creates a generated class definition from the information present in the supplied {@link ProxySpecification}, and
