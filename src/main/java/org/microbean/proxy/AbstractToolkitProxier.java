@@ -18,8 +18,6 @@ import java.lang.invoke.MethodHandles.Lookup;
 
 import java.lang.System.Logger;
 
-import java.util.Objects;
-
 import java.util.function.Supplier;
 
 import org.microbean.construct.Domain;
@@ -27,6 +25,8 @@ import org.microbean.construct.Domain;
 import static java.lang.System.getLogger;
 
 import static java.lang.System.Logger.Level.DEBUG;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * An {@link AbstractProxier} built using some kind of <dfn>toolkit</dfn>, such as <a
@@ -58,7 +58,7 @@ public abstract non-sealed class AbstractToolkitProxier<PS extends ProxySpecific
   protected AbstractToolkitProxier(final Domain domain, final Lookup lookup) {
     super(domain);
     // see #lookup(Class) below
-    this.lookup = Objects.requireNonNull(lookup, "lookup");
+    this.lookup = requireNonNull(lookup, "lookup");
   }
 
   /**
