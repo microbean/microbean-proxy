@@ -13,8 +13,6 @@
  */
 package org.microbean.proxy;
 
-import java.util.function.Supplier;
-
 /**
  * An interface whose implementations pretend to be another type and alter the behavior of instances of that type in
  * some way.

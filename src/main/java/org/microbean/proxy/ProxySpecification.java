@@ -14,13 +14,10 @@
 package org.microbean.proxy;
 
 import java.util.List;
-import java.util.Objects;
 
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 
 import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
 import org.microbean.attributes.Attributes;
@@ -29,6 +26,10 @@ import org.microbean.bean.BeanTypeList;
 import org.microbean.bean.Id;
 
 import org.microbean.construct.Domain;
+
+import static javax.lang.model.element.ElementKind.INTERFACE;
+
+import static javax.lang.model.type.TypeKind.DECLARED;
 
 import static org.microbean.bean.BeanTypes.proxiableBeanType;
 
@@ -45,7 +46,7 @@ public class ProxySpecification {
    * Instance fields.
    */
 
-  
+
   private final Domain domain;
 
   private final DeclaredType sc;
@@ -53,7 +54,7 @@ public class ProxySpecification {
   private final List<TypeMirror> interfaces;
 
   private final List<Attributes> attributes;
-  
+
   private final String name;
 
 
@@ -81,17 +82,16 @@ public class ProxySpecification {
     this.attributes = id.attributes();
     final BeanTypeList types = id.types();
     final TypeMirror t = types.get(0); // putative superclass
-    if (t.getKind() != TypeKind.DECLARED || domain.javaLangObject(t) && types.size() == 1) {
+    if (t.getKind() != DECLARED || domain.javaLangObject(t) && types.size() == 1) {
       throw new IllegalArgumentException("id: " + id);
-    } else if (((DeclaredType)t).asElement().getKind() == ElementKind.INTERFACE) {
+    } else if (((DeclaredType)t).asElement().getKind() == INTERFACE) {
       this.sc = (DeclaredType)domain.javaLangObject().asType();
       this.interfaces = types;
     } else if (!proxiableBeanType(t)) {
       throw new IllegalArgumentException("id: " + id);
     } else {
       this.sc = (DeclaredType)t;
-      final int interfaceIndex = types.interfaceIndex();
-      this.interfaces = interfaceIndex < 0 ? List.of() : types.subList(interfaceIndex, types.size());
+      this.interfaces = types.interfaces();
     }
     this.name = computeName(domain, this.sc, this.interfaces);
   }
@@ -187,7 +187,7 @@ public class ProxySpecification {
 
     // TODO: there will absolutely be edge cases here and we know this is not complete.
 
-    if (superclass.getKind() != TypeKind.DECLARED) {
+    if (superclass.getKind() != DECLARED) {
       throw new IllegalArgumentException("superclass: " + superclass);
     }
     final DeclaredType proxyClassSibling;
@@ -197,7 +197,7 @@ public class ProxySpecification {
       }
       // Interface-only. There will be at least one and it will be the most specialized.
       proxyClassSibling = (DeclaredType)interfaces.get(0);
-      if (proxyClassSibling.getKind() != TypeKind.DECLARED) {
+      if (proxyClassSibling.getKind() != DECLARED) {
         throw new IllegalArgumentException("interfaces: " + interfaces);
       }
     } else {
