@@ -2,6 +2,8 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/org.microbean/microbean-proxy.svg?label=Maven%20Central)](https://search.maven.org/artifact/org.microbean/microbean-proxy)
 
+![0% AI](https://img.shields.io/badge/%F0%9F%A4%96_AI-0%25_%F0%9F%8C%BC-brightgreen)
+
 The microBean™ Proxy project provides classes and interfaces assisting with implementing proxy classes.
 
 # Status
@@ -28,7 +30,7 @@ dependency:
   <groupId>org.microbean</groupId>
   <artifactId>microbean-proxy</artifactId>
   <!-- Always check https://central.sonatype.com/artifact/org.microbean/microbean-proxy for up-to-date available versions. -->
-  <version>0.0.5</version>
+  <version>0.0.6</version>
 </dependency>
 ```
 
