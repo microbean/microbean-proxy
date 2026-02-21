@@ -1,6 +1,6 @@
 /* -*- mode: Java; c-basic-offset: 2; indent-tabs-mode: nil; coding: utf-8-unix -*-
  *
- * Copyright © 2025 microBean™.
+ * Copyright © 2025–2026 microBean™.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -15,12 +15,11 @@ package org.microbean.proxy;
 
 import java.util.List;
 
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.TypeElement;
 
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
-
-import org.microbean.attributes.Attributes;
 
 import org.microbean.bean.BeanTypeList;
 import org.microbean.bean.Id;
@@ -34,7 +33,7 @@ import static javax.lang.model.type.TypeKind.DECLARED;
 import static org.microbean.bean.BeanTypes.proxiableBeanType;
 
 /**
- * Information about a proxy.
+ * Information about what requirements a {@link Proxy} must fulfil.
  *
  * @author <a href="https://about.me/lairdnelson" target="_top">Laird Nelson</a>
  */
@@ -53,7 +52,7 @@ public class ProxySpecification {
 
   private final List<TypeMirror> interfaces;
 
-  private final List<Attributes> attributes;
+  private final List<AnnotationMirror> annotations;
 
   private final String name;
 
@@ -79,7 +78,7 @@ public class ProxySpecification {
   public ProxySpecification(final Domain domain, final Id id) {
     super();
     this.domain = domain; // not nullable
-    this.attributes = id.attributes();
+    this.annotations = id.annotations();
     final BeanTypeList types = id.types();
     final TypeMirror t = types.get(0); // putative superclass
     if (t.getKind() != DECLARED || domain.javaLangObject(t) && types.size() == 1) {
@@ -125,7 +124,7 @@ public class ProxySpecification {
           return false;
         }
       }
-      return this.attributes().equals(her.attributes());
+      return this.annotations().equals(her.annotations());
     } else {
       return false;
     }
@@ -137,17 +136,17 @@ public class ProxySpecification {
     hashCode = 17 * hashCode + this.domain.hashCode();
     hashCode = 17 * hashCode + this.superclass().hashCode();
     hashCode = 17 * hashCode + this.interfaces().hashCode();
-    hashCode = 17 * hashCode + this.attributes().hashCode();
+    hashCode = 17 * hashCode + this.annotations().hashCode();
     return hashCode;
   }
 
   /**
-   * Returns an immutable {@link List} of {@link Attributes} describing this {@link ProxySpecification}.
+   * Returns an immutable {@link List} of {@link AnnotationMirror}s describing this {@link ProxySpecification}.
    *
-   * @return a non-{@code null}, immutable {@link List} of {@link Attributes} instances
+   * @return a non-{@code null}, immutable {@link List} of {@link AnnotationMirror} instances
    */
-  public final List<Attributes> attributes() {
-    return this.attributes;
+  public final List<AnnotationMirror> annotations() {
+    return this.annotations;
   }
 
   /**
